@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+<h:head>
+    <title>Gestión de Biblioteca</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #e0f2ff, #a0cfff);
+            color: #003366;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 2rem;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 2rem;
+        }
+
+        .menu-button {
+            width: 100%;
+            padding: 10px;
+            margin: 0.5rem 0;
+            font-size: 1rem;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .menu-button:hover {
+            background-color: #0056b3;
+        }
+
+        img {
+            width: 120px;
+            margin-bottom: 1.5rem;
+        }
+    </style>
+</h:head>
+
+<h:body>
+    <div class="container">
+        <h:form>
+            <h:graphicImage url="resources/images/biblioteca.png" alt="Biblioteca" />
+
+            <h1>Bienvenido a la Biblioteca</h1>
+
+            <h:commandButton styleClass="menu-button" value="Gestión de Perfiles" action="perfil.xhtml?faces-redirect=true" />
+            <h:commandButton styleClass="menu-button" value="Configuración" action="configuracion.xhtml?faces-redirect=true" />
+            <h:commandButton styleClass="menu-button" value="Gestión de Préstamos" action="gestion.xhtml?faces-redirect=true" />
+            <h:commandButton styleClass="menu-button" value="Procesos" action="proceso.xhtml?faces-redirect=true" />
+            <h:commandButton styleClass="menu-button" value="Reportes" action="reportes.xhtml?faces-redirect=true" />
+            <h:commandButton styleClass="menu-button" value="Consultas" action="consultas.xhtml?faces-redirect=true" />
+        </h:form>
+    </div>
+</h:body>
+
+</html>

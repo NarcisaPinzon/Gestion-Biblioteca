@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core">
+<h:head>
+    <title>Registro de Usuario</title>
+    <link rel="stylesheet" type="text/css" href="css/estilos.css" />
+</h:head>
+<h:body>
+    <div class="login-container">
+        <h:graphicImage url="images/logo-unl.jpg" alt="Logo UNL" styleClass="logo" />
+
+        <h2>REGISTRO DE USUARIO</h2>
+        <p>Ingrese sus datos para crear una cuenta</p>
+
+        <h:form>
+            <label for="user">Nuevo usuario:</label>
+            <h:inputText id="user" value="#{authBean.username}" />
+
+            <label for="pass">Nueva contraseña:</label>
+            <h:inputSecret id="pass" value="#{authBean.password}" />
+
+            <div class="buttons">
+                <h:commandButton value="Registrar" action="#{authBean.registrar}" />
+                <h:commandButton value="Volver al Login" action="login.xhtml?faces-redirect=true" />
+            </div>
+        </h:form>
+    </div>
+</h:body>
+</html>
+

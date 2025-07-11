@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+<h:head><title>Consultas</title></h:head>
+<h:body>
+    <h1>Enviar Consulta</h1>
+
+    <h:form>
+        <h:outputLabel value="Tipo de Consulta:" />
+        <h:inputText value="#{consultasBean.tipo}" /><br/><br/>
+
+        <h:outputLabel value="Contenido:" />
+        <h:inputTextarea value="#{consultasBean.contenido}" rows="4" cols="50" /><br/><br/>
+
+        <h:commandButton value="Enviar" action="#{consultasBean.enviar}" />
+        <h:commandButton value="Volver a Biblioteca" action="biblioteca.xhtml?faces-redirect=true" />
+        <h:messages globalOnly="true" />
+    </h:form>
+</h:body>
+</html>

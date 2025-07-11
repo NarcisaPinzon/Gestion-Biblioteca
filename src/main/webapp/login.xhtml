@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core">
+<h:head>
+    <title>Login</title>
+    <link rel="stylesheet" type="text/css" href="css/estilos.css" />
+</h:head>
+<h:body>
+    <div class="login-container">
+        <h:graphicImage url="images/logo-biblioteca.png" alt="Logo Biblioteca" />
+
+
+        <h2>SISTEMA BIBLIOTECARIO</h2>
+        <p>Por favor regístrese o inicie sesión para poder acceder</p>
+
+        <h:form>
+            <label for="user">Usuario:</label>
+            <h:inputText id="user" value="#{authBean.username}" />
+
+            <label for="pass">Contraseña:</label>
+            <h:inputSecret id="pass" value="#{authBean.password}" />
+
+            <div class="buttons">
+                <h:commandButton value="Iniciar sesión" action="#{authBean.login}" />
+                <h:commandButton value="Registrarse" action="registro.xhtml?faces-redirect=true" />
+            </div>
+        </h:form>
+    </div>
+</h:body>
+</html>
+
