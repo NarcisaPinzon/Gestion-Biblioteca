@@ -2,11 +2,10 @@ package edu.unl.cc.biblioteca.jakarta.bean;
 
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Named;
+import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
 
 @Named("authBean")
 @SessionScoped
@@ -18,27 +17,20 @@ public class AuthBean implements Serializable {
     private String password;
     private boolean autenticado = false;
 
-    // Simulador de usuarios registrados
-    private static final Map<String, String> usuariosRegistrados = new HashMap<>();
-
-    // Lógica para iniciar sesión
     public String login() {
-        if (usuariosRegistrados.containsKey(username)
-                && usuariosRegistrados.get(username).equals(password)) {
+        if (username != null && password != null
+                && username.length() <= 10
+                && password.length() == 12) {
             autenticado = true;
-            return "biblioteca.xhtml?faces-redirect=true";
+            return "busqueda.xhtml?faces-redirect=true";
+        } else {
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                            "Usuario o contraseña incorrecta", null));
+            return null; // Mantenerse en la misma página
         }
-        return "login.xhtml?faces-redirect=true"; // si falla
     }
 
-    // Lógica para registrar
-    public String registrar() {
-        usuariosRegistrados.put(username, password);
-        autenticado = true;
-        return "biblioteca.xhtml?faces-redirect=true";
-    }
-
-    // Protección de vistas
     public void verificarSesion() throws IOException {
         if (!autenticado) {
             FacesContext.getCurrentInstance().getExternalContext().redirect("login.xhtml");
@@ -54,4 +46,3 @@ public class AuthBean implements Serializable {
 
     public boolean isAutenticado() { return autenticado; }
 }
-

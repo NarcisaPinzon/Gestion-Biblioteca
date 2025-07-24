@@ -1,4 +1,5 @@
 package edu.unl.cc.biblioteca.jakarta.bean;
+
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
 
@@ -7,60 +8,50 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Named("consultasBean")
-@ViewScoped // Example scope, adjust as needed
+@ViewScoped
 public class ConsultasBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    // Attributes for a new consultation (example)
-    private String asuntoConsulta;
-    private String mensajeConsulta;
-    private String usuarioConsulta; // Who is sending the query
+    // Renombrados para coincidir con XHTML
+    private String tipo;      // antes: asuntoConsulta
+    private String contenido; // antes: mensajeConsulta
+    private String usuarioConsulta; // Se puede mantener
 
-    // List to hold consultations (for demonstration)
     private List<Consulta> listaConsultas;
 
     public ConsultasBean() {
         this.listaConsultas = new ArrayList<>();
-        // listaConsultas.add(new Consulta("Problema con préstamo", "No puedo renovar mi libro.", "U001"));
     }
 
-    /**
-     *
-     * @return
-     */
-    public String enviarConsulta() {
-        System.out.println("Enviando consulta de " + usuarioConsulta + ": Asunto='" + asuntoConsulta + "', Mensaje='" + mensajeConsulta + "'");
-        Consulta nuevaConsulta = new Consulta(asuntoConsulta, mensajeConsulta, usuarioConsulta);
+    // Método renombrado para coincidir con la vista
+    public String enviar() {
+        System.out.println("Enviando consulta: Tipo='" + tipo + "', Contenido='" + contenido + "', Usuario='" + usuarioConsulta + "'");
+        Consulta nuevaConsulta = new Consulta(tipo, contenido, usuarioConsulta);
         listaConsultas.add(nuevaConsulta);
 
-        asuntoConsulta = null;
-        mensajeConsulta = null;
+        tipo = null;
+        contenido = null;
 
         System.out.println("Consulta enviada exitosamente.");
         return "consulta_enviada.xhtml?faces-redirect=true";
     }
 
-
-    public List<Consulta> getConsultas() {
-        // Logic to retrieve all consultations
-        return listaConsultas;
+    // Getters y setters
+    public String getTipo() {
+        return tipo;
     }
 
-    public String getAsuntoConsulta() {
-        return asuntoConsulta;
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
-    public void setAsuntoConsulta(String asuntoConsulta) {
-        this.asuntoConsulta = asuntoConsulta;
+    public String getContenido() {
+        return contenido;
     }
 
-    public String getMensajeConsulta() {
-        return mensajeConsulta;
-    }
-
-    public void setMensajeConsulta(String mensajeConsulta) {
-        this.mensajeConsulta = mensajeConsulta;
+    public void setContenido(String contenido) {
+        this.contenido = contenido;
     }
 
     public String getUsuarioConsulta() {
@@ -71,6 +62,11 @@ public class ConsultasBean implements Serializable {
         this.usuarioConsulta = usuarioConsulta;
     }
 
+    public List<Consulta> getConsultas() {
+        return listaConsultas;
+    }
+
+    // Clase interna Consulta
     public static class Consulta implements Serializable {
         private String asunto;
         private String mensaje;
@@ -82,12 +78,28 @@ public class ConsultasBean implements Serializable {
             this.usuario = usuario;
         }
 
-        public String getAsunto() { return asunto; }
-        public void setAsunto(String asunto) { this.asunto = asunto; }
-        public String getMensaje() { return mensaje; }
-        public void setMensaje(String mensaje) { this.mensaje = mensaje; }
-        public String getUsuario() { return usuario; }
-        public void setUsuario(String usuario) { this.usuario = usuario; }
+        public String getAsunto() {
+            return asunto;
+        }
+
+        public void setAsunto(String asunto) {
+            this.asunto = asunto;
+        }
+
+        public String getMensaje() {
+            return mensaje;
+        }
+
+        public void setMensaje(String mensaje) {
+            this.mensaje = mensaje;
+        }
+
+        public String getUsuario() {
+            return usuario;
+        }
+
+        public void setUsuario(String usuario) {
+            this.usuario = usuario;
+        }
     }
 }
-
