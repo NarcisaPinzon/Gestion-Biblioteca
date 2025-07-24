@@ -1,85 +1,179 @@
 package edu.unl.cc.biblioteca.jakarta.bean;
-import jakarta.enterprise.context.RequestScoped;
+
+import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Named;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 @Named("gestionBean")
-@RequestScoped
+@SessionScoped
 public class GestionBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private String libroIdParaReserva;
-    private String usuarioIdParaReserva;
-    private String libroIdParaRenovacion;
+    // Parámetros del sistema
+    private int maxPrestamo = 5;
+    private int diasPrestamo = 14;
 
+    // Datos de formulario
+    private String usuarioId;
+    private String libroId;
+    private String libroBuscado;
+    private String idPrestamo;
+    private int diasAdicionales;
+
+    // Gestión de libros y préstamos
     private Map<String, Integer> inventarioLibros;
+    private Map<String, PrestamoBean> prestamosActivos;
+    private Map<String, Boolean> accesoDigitalUsuarios;
+
+    // Mensaje de operación
+    private String mensajeUsuario;
 
     public GestionBean() {
         inventarioLibros = new HashMap<>();
+        prestamosActivos = new HashMap<>();
+        accesoDigitalUsuarios = new HashMap<>();
+
         inventarioLibros.put("ISBN-1234", 5);
-        inventarioLibros.put("ISBN-5678", 2);
+        inventarioLibros.put("ISBN-5678", 0);
     }
 
-    /**
-     *
-     * @return
-     */
-    public String reservarLibro() {
-        System.out.println("Reservando libro " + libroIdParaReserva + " para usuario " + usuarioIdParaReserva);
-        Integer availableCopies = inventarioLibros.getOrDefault(libroIdParaReserva, 0);
-        if (availableCopies > 0) {
-            inventarioLibros.put(libroIdParaReserva, availableCopies - 1);
-            System.out.println("Libro " + libroIdParaReserva + " reservado exitosamente.");
-            return "reserva_exitosa.xhtml?faces-redirect=true";
+    // ========== FUNCIONES DE PRÉSTAMO ==========
+
+    public String prestarLibro() {
+        int disponibles = inventarioLibros.getOrDefault(libroId, 0);
+        if (disponibles > 0 && contarPrestamosUsuario(usuarioId) < maxPrestamo) {
+            LocalDate fechaInicio = LocalDate.now();
+            LocalDate fechaDevolucion = fechaInicio.plusDays(diasPrestamo);
+            String id = UUID.randomUUID().toString();
+
+            prestamosActivos.put(id, new PrestamoBean(id, usuarioId, libroId, fechaInicio, fechaDevolucion));
+            inventarioLibros.put(libroId, disponibles - 1);
+            mensajeUsuario = "Libro prestado correctamente. ID del préstamo: " + id;
         } else {
-            System.out.println("Libro " + libroIdParaReserva + " no disponible para reserva.");
-            return "reserva_fallida.xhtml?faces-redirect=true";
+            mensajeUsuario = disponibles == 0
+                    ? "El libro no está disponible."
+                    : "Has alcanzado el límite máximo de préstamos.";
         }
+        return null;
     }
 
-
-    public String renovarLibro() {
-        System.out.println("Renovando préstamo del libro: " + libroIdParaRenovacion);
-        // This would involve updating a loan record in the database
-        System.out.println("Préstamo del libro " + libroIdParaRenovacion + " renovado exitosamente.");
-        return "renovacion_exitosa.xhtml?faces-redirect=true";
+    public String renovarPrestamo() {
+        PrestamoBean p = prestamosActivos.get(idPrestamo);
+        if (p != null && p.getUsuarioId().equals(usuarioId)) {
+            p.setFechaDevolucion(p.getFechaDevolucion().plusDays(diasAdicionales));
+            mensajeUsuario = "Préstamo renovado hasta " + p.getFechaDevolucion();
+        } else {
+            mensajeUsuario = "No se encontró el préstamo para renovar.";
+        }
+        return null;
     }
 
-    /**
-     *
-     * @param bookId
-     * @return
-     */
-    public int disponibilidad(String bookId) {
-        return inventarioLibros.getOrDefault(bookId, 0);
+    // ========== GESTIÓN DE ACCESO DIGITAL ==========
+
+    public String alternarAccesoDigital() {
+        boolean tieneAcceso = accesoDigitalUsuarios.getOrDefault(usuarioId, false);
+        accesoDigitalUsuarios.put(usuarioId, !tieneAcceso);
+        mensajeUsuario = tieneAcceso ? "Acceso digital revocado." : "Acceso digital activado.";
+        return null;
     }
 
-    public String getLibroIdParaReserva() {
-        return libroIdParaReserva;
+    public boolean tieneAccesoDigital(String usuario) {
+        return accesoDigitalUsuarios.getOrDefault(usuario, false);
     }
 
-    public void setLibroIdParaReserva(String libroIdParaReserva) {
-        this.libroIdParaReserva = libroIdParaReserva;
+    // ========== DISPONIBILIDAD Y RESERVA ==========
+
+    public String verificarDisponibilidad() {
+        int disponibles = inventarioLibros.getOrDefault(libroBuscado, 0);
+        mensajeUsuario = disponibles > 0 ? "Disponible: " + disponibles : "No disponible";
+        return null;
     }
 
-    public String getUsuarioIdParaReserva() {
-        return usuarioIdParaReserva;
+    // ========== UTILITARIOS ==========
+
+    public int contarPrestamosUsuario(String usuario) {
+        return (int) prestamosActivos.values().stream()
+                .filter(p -> p.getUsuarioId().equals(usuario))
+                .count();
     }
 
-    public void setUsuarioIdParaReserva(String usuarioIdParaReserva) {
-        this.usuarioIdParaReserva = usuarioIdParaReserva;
+    // ========== GETTERS / SETTERS ==========
+
+    public int getMaxPrestamo() {
+        return maxPrestamo;
     }
 
-    public String getLibroIdParaRenovacion() {
-        return libroIdParaRenovacion;
+    public void setMaxPrestamo(int maxPrestamo) {
+        this.maxPrestamo = maxPrestamo;
     }
 
-    public void setLibroIdParaRenovacion(String libroIdParaRenovacion) {
-        this.libroIdParaRenovacion = libroIdParaRenovacion;
+    public int getDiasPrestamo() {
+        return diasPrestamo;
+    }
+
+    public void setDiasPrestamo(int diasPrestamo) {
+        this.diasPrestamo = diasPrestamo;
+    }
+
+    public String getUsuarioId() {
+        return usuarioId;
+    }
+
+    public void setUsuarioId(String usuarioId) {
+        this.usuarioId = usuarioId;
+    }
+
+    public String getLibroId() {
+        return libroId;
+    }
+
+    public void setLibroId(String libroId) {
+        this.libroId = libroId;
+    }
+
+    public String getLibroBuscado() {
+        return libroBuscado;
+    }
+
+    public void setLibroBuscado(String libroBuscado) {
+        this.libroBuscado = libroBuscado;
+    }
+
+    public String getIdPrestamo() {
+        return idPrestamo;
+    }
+
+    public void setIdPrestamo(String idPrestamo) {
+        this.idPrestamo = idPrestamo;
+    }
+
+    public int getDiasAdicionales() {
+        return diasAdicionales;
+    }
+
+    public void setDiasAdicionales(int diasAdicionales) {
+        this.diasAdicionales = diasAdicionales;
+    }
+
+    public String getMensajeUsuario() {
+        return mensajeUsuario;
+    }
+
+    public void setMensajeUsuario(String mensajeUsuario) {
+        this.mensajeUsuario = mensajeUsuario;
+    }
+
+    public Map<String, Integer> getInventarioLibros() {
+        return inventarioLibros;
+    }
+
+    public Map<String, PrestamoBean> getPrestamosActivos() {
+        return prestamosActivos;
     }
 }
-
