@@ -1,0 +1,179 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #e3f3e1;
+}
+
+/* Encabezado */
+header {
+    background-color: #025159;
+    color: white;
+    padding: 1rem 0;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2.2rem;
+}
+
+/* Contenedor principal centrado */
+.contenido-centro {
+    text-align: center;
+    padding: 2rem;
+}
+
+/* Banner */
+.banner-img {
+    width: 100%;
+    height: auto;
+    max-height: 300px;
+    object-fit: cover;
+    margin-bottom: 2rem;
+}
+
+/* Sección informativa */
+.info-section {
+    background-size: cover;
+    padding: 2rem;
+    border-radius: 12px;
+    margin: 2rem auto;
+    max-width: 900px;
+}
+
+.titulo-biblioteca {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.descripcion {
+    font-size: 1.1rem;
+    color: #333;
+    margin: 0 auto 2rem auto;
+    line-height: 1.6;
+    max-width: 800px;
+    text-align: justify;
+    padding: 0 1rem;
+}
+
+/* Imágenes de biblioteca */
+.imagenes-biblioteca {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.img-biblioteca {
+    width: 340px; /* ligeramente más grandes */
+    max-width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    transition: transform 0.3s;
+}
+
+.img-biblioteca:hover {
+    transform: scale(1.03);
+}
+
+
+/* Caja principal */
+.main-box {
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: inline-block;
+    margin-top: 2rem;
+    max-width: 500px;
+    width: 90%;
+}
+
+.main-box h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+}
+
+.main-box p {
+    font-size: 1.1rem;
+    color: #444;
+    margin-bottom: 1.5rem;
+}
+
+/* Botón de login */
+.login-btn {
+    background-color: #00796b;
+    color: white;
+    padding: 0.7rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.login-btn:hover {
+    background-color: #005b4f;
+}
+
+/* Pie de página */
+footer {
+    background-color: #025159;
+    color: white;
+    padding: 1rem 0;
+    text-align: center;
+    margin-top: 3rem;
+}
+/* Menú lateral */
+.side-menu {
+    position: fixed;
+    top: 0;
+    left: -250px;
+    width: 250px;
+    height: 100%;
+    background-color: #004d40;
+    padding-top: 60px;
+    transition: 0.3s;
+    z-index: 1000;
+}
+
+.side-menu a {
+    display: block;
+    padding: 12px 24px;
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+    transition: background-color 0.2s;
+}
+
+.side-menu a:hover {
+    background-color: #00695c;
+}
+
+.side-menu.active {
+    left: 0;
+}
+
+/* Botón hamburguesa */
+.menu-toggle {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    font-size: 26px;
+    background-color: #004d40;
+    color: white;
+    border: none;
+    padding: 10px 14px;
+    border-radius: 4px;
+    cursor: pointer;
+    z-index: 1001;
+}
+.perfil-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+}

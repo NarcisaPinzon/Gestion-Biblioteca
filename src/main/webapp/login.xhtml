@@ -8,25 +8,26 @@
 </h:head>
 <h:body>
     <div class="login-container">
-        <h:graphicImage url="images/logo-biblioteca.png" alt="Logo Biblioteca" />
-
+        <h:graphicImage url="images/logo-biblioteca.jpg" alt="Logo Biblioteca" />
 
         <h2>SISTEMA BIBLIOTECARIO</h2>
         <p>Por favor regístrese o inicie sesión para poder acceder</p>
 
         <h:form>
             <label for="user">Usuario:</label>
-            <h:inputText id="user" value="#{authBean.username}" />
+            <h:inputText id="user" value="#{authBean.username}" required="true" />
 
             <label for="pass">Contraseña:</label>
-            <h:inputSecret id="pass" value="#{authBean.password}" />
+            <h:inputSecret id="pass" value="#{authBean.password}" required="true" />
 
             <div class="buttons">
                 <h:commandButton value="Iniciar sesión" action="#{authBean.login}" />
-                <h:commandButton value="Registrarse" action="registro.xhtml?faces-redirect=true" />
+                <h:button value="Registrarse" outcome="registro.xhtml" />
             </div>
+
+            <!-- Mensajes de error debajo de los botones -->
+            <h:messages globalOnly="true" layout="table" style="color:red; margin-top:10px;" />
         </h:form>
     </div>
 </h:body>
 </html>
-

@@ -1,0 +1,94 @@
+@import url('https://fonts.googleapis.com/css2?family=Germania+One&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    font-family: Arial, sans-serif;
+    background-color: #e3f3e1;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.contenedor-principal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+}
+
+.titulo {
+    font-family: 'Germania One', cursive;
+    font-size: 40px;
+    background-color: #41f686;
+    padding: 15px 40px;
+    margin-bottom: 40px;
+    border-radius: 12px;
+}
+
+.contenedor-perfiles {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+}
+
+.card {
+    background-color: white;
+    border-radius: 20px;
+    padding: 25px 15px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 220px;
+}
+
+.img-perfil {
+    max-width: 100px;
+    max-height: 100px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    margin-bottom: 20px;
+}
+
+.boton {
+    background-color: #302bcf;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 15px;
+    text-align: center;
+    width: 100%;
+}
+
+.boton:hover {
+    background-color: #1f1aa3;
+}
+
+/* Línea verde inferior */
+.barra-inferior {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 30px;
+    background-color: #41f686;
+    z-index: 999;
+}

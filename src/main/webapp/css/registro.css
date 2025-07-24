@@ -1,0 +1,103 @@
+@import url('https://fonts.googleapis.com/css2?family=Germania+One&display=swap');
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #ffffff;
+}
+
+.container {
+    display: flex;
+    height: 100vh;
+}
+
+/* Barra vertical azul */
+.barra-lateral {
+    width: 20px;
+    background-color: #69c1ec;
+    box-shadow: 0 0 8px rgba(0, 122, 204, 0.6);
+}
+
+/* Sección del formulario */
+.login-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Logo UNL */
+.logo-unl {
+    width: 120px; /* Aumenta el tamaño (antes era 80px) */
+    height: auto; /* Mantiene la proporción original */
+    margin-bottom: 10px;
+}
+
+
+/* Título */
+.titulo {
+    font-family: 'Germania One', cursive;
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+/* Formulario */
+.formulario {
+    width: 100%;
+    max-width: 500px;
+}
+
+/* Agrupación de nombre y apellido */
+.campo-grupo {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 25px; /* interlineado mayor */
+}
+
+/* Campos individuales */
+.campo {
+    width: 100%;
+}
+
+/* Estilo de entrada */
+.entrada {
+    width: 100%;
+    padding: 12px;
+    background-color: #a3d4f7; /* azul más oscuro */
+    border: none; /* sin bordes */
+    border-radius: 6px;
+    box-sizing: border-box;
+    margin-bottom: 20px; /* más espacio entre campos */
+    font-size: 15px;
+}
+
+/* Botón centrado */
+.boton-centrado {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+/* Botón verde */
+.boton-verde {
+    background-color: #00b050;
+    color: white;
+    padding: 10px 22px;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* Mensaje de éxito */
+.mensaje-exito {
+    color: green;
+    font-weight: bold;
+    font-size: 16px;
+    text-align: center;
+    margin-top: 20px;
+}
