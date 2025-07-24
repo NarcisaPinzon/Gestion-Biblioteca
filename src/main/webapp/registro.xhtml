@@ -1,31 +1,76 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="jakarta.faces.html"
-      xmlns:f="jakarta.faces.core">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
 <h:head>
     <title>Registro de Usuario</title>
-    <link rel="stylesheet" type="text/css" href="css/estilos.css" />
+    <link rel="stylesheet" type="text/css" href="css/registro.css" />
 </h:head>
+
 <h:body>
-    <div class="login-container">
-        <h:graphicImage url="images/logo-unl.jpg" alt="Logo UNL" styleClass="logo" />
+    <div class="container">
 
-        <h2>REGISTRO DE USUARIO</h2>
-        <p>Ingrese sus datos para crear una cuenta</p>
+        <!-- Barra lateral azul -->
+        <div class="barra-lateral"></div>
 
-        <h:form>
-            <label for="user">Nuevo usuario:</label>
-            <h:inputText id="user" value="#{authBean.username}" />
+        <!-- Formulario de registro -->
+        <div class="login-section">
+            <h:graphicImage url="images/UNL.png" styleClass="logo-unl" />
+            <h2 class="titulo">REGISTRARSE</h2>
 
-            <label for="pass">Nueva contraseña:</label>
-            <h:inputSecret id="pass" value="#{authBean.password}" />
+            <h:form styleClass="formulario">
+                <!-- Sección del formulario -->
+                <h:panelGroup rendered="#{!registroBean.registroExitoso}">
+                    <div class="campo-grupo">
+                        <div class="campo">
+                            <label>Nombre</label>
+                            <h:inputText value="#{registroBean.nombre}" styleClass="entrada" />
+                        </div>
+                        <div class="campo">
+                            <label>Apellido</label>
+                            <h:inputText value="#{registroBean.apellido}" styleClass="entrada" />
+                        </div>
+                    </div>
 
-            <div class="buttons">
-                <h:commandButton value="Registrar" action="#{authBean.registrar}" />
-                <h:commandButton value="Volver al Login" action="login.xhtml?faces-redirect=true" />
-            </div>
-        </h:form>
+                    <div class="campo">
+                        <label>Correo Electrónico</label>
+                        <h:inputText id="correo" value="#{registroBean.correo}" styleClass="entrada" required="true">
+                            <f:validateRegex pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|edu\.ec)$"/>
+                        </h:inputText>
+                        <h:message for="correo" style="color:red"/>
+                    </div>
+
+                    <div class="campo">
+                        <label>Usuario</label>
+                        <h:inputText value="#{registroBean.usuario}" styleClass="entrada" />
+                    </div>
+
+                    <div class="campo">
+                        <label>Contraseña</label>
+                        <h:inputSecret id="contrasena" value="#{registroBean.contrasena}" styleClass="entrada" required="true">
+                            <f:validateLength minimum="12" maximum="12"/>
+                        </h:inputSecret>
+                        <h:message for="contrasena" style="color:red"/>
+                    </div>
+
+                    <div class="boton-centrado">
+                        <h:commandButton value="Crear Cuenta" action="#{registroBean.registrar}" styleClass="boton-verde" />
+                    </div>
+                </h:panelGroup>
+
+                <!-- Mensaje de éxito y botón de iniciar sesión -->
+                <h:panelGroup rendered="#{registroBean.registroExitoso}">
+                    <div class="mensaje-exito">
+                        Su usuario ha sido creado exitosamente 😊
+                    </div>
+
+                    <div class="boton-centrado">
+                        <h:commandButton value="Iniciar sesión" action="login.xhtml?faces-redirect=true" styleClass="boton-verde" />
+                    </div>
+                </h:panelGroup>
+            </h:form>
+        </div>
     </div>
 </h:body>
 </html>
-

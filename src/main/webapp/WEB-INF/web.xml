@@ -6,7 +6,7 @@
                              https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
     <context-param>
         <param-name>javax.faces.CONFIG_FILES</param-name>
-        <param-value>/WEB-INF/login.xml,/registro.xml,/css/estilos.xml</param-value>
+        <param-value>/WEB-INF/login.xml,/registro.xml,/css/estilos.xml,/usuario.xml,/WEB-INF/busqueda.xhtml.xml,/WEB-INF/index.xml,/persistence.xml,/WEB-INF/libros.xhtml.xml,/WEB-INF/libro.xml,/WEB-INF/reserva.xhtml.xml,/busqueda.xhtml.xml,/WEB-INF/index.xhtml.xml,/reserva.xml</param-value>
     </context-param>
 
     <!-- JSF Faces Servlet Configuration -->
