@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head>
+    <title>Confirmar Reserva</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            background-color: #a0d6c4;
+        }
+
+        .reserva-container {
+            background-color: white;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 30px 40px;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .titulo {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 0;
+            color: #1a1a1a;
+        }
+
+        .form-row {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .form-label {
+            background-color: #79c3b3;
+            color: black;
+            font-weight: bold;
+            padding: 15px;
+            width: 220px;
+            text-align: center;
+            border-radius: 15px;
+        }
+
+        .form-field {
+            flex: 1;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 14px;
+            border-radius: 20px;
+            border: 2px solid black;
+            font-size: 16px;
+        }
+
+        .boton-confirmar {
+            align-self: center;
+            background: linear-gradient(to right, #5e64ec, #3e45a0);
+            color: white;
+            font-weight: bold;
+            padding: 15px 30px;
+            font-size: 18px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+        }
+
+        .boton-confirmar:hover {
+            opacity: 0.9;
+        }
+    </style>
+</h:head>
+
+<h:body>
+    <h:form>
+        <div class="reserva-container">
+            <div class="titulo">CONFIRMAR RESERVA</div>
+
+            <div class="form-row">
+                <div class="form-label">Hacer una reserva de:</div>
+                <div class="form-field">
+                    <h:outputLink value="detalleLibro.xhtml?id=#{reservaBean.libro.id}">
+                        <h:outputText value="#{reservaBean.libro.titulo}" styleClass="form-input"/>
+                    </h:outputLink>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-label">Número de reservas:</div>
+                <div class="form-field">
+                    <h:outputText value="#{reservaBean.numeroReservas}" styleClass="form-input"/>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-label">Reserva no necesaria después de:</div>
+                <div class="form-field">
+                    <h:inputText value="#{reservaBean.fechaLimite}" styleClass="form-input" placeholder="YYYY-MM-DD">
+                        <f:convertDateTime pattern="yyyy-MM-dd"/>
+                    </h:inputText>
+                </div>
+            </div>
+
+            <h:commandButton value="CONFIRMAR RESERVA"
+                             action="#{reservaBean.confirmarReserva}"
+                             styleClass="boton-confirmar"/>
+        </div>
+    </h:form>
+</h:body>
+</html>
