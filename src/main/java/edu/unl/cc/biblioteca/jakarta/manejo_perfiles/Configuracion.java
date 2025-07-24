@@ -26,6 +26,5 @@ public class Configuracion {
         return perfiles.get(id);
     }
 
-    // Getter de perfiles si lo necesitas
 }
 
