@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+        <!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head>
+    <title>Catálogo de Libros</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f3f4f6;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table th, table td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        table th {
+            background-color: #f0f0f0;
+        }
+
+        .disponible {
+            color: green;
+            font-weight: bold;
+        }
+
+        .no-disponible {
+            color: red;
+            font-weight: bold;
+        }
+
+        .boton {
+            padding: 6px 12px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .boton:hover {
+            background-color: #45a049;
+        }
+    </style>
+</h:head>
+
+<h:body>
+    <div class="container">
+        <h1>Catálogo de Libros</h1>
+
+        <h:form>
+            <h:dataTable value="#{libroBean.libros}" var="libro" border="0">
+                <h:column>
+                    <f:facet name="header">Título</f:facet>
+                    #{libro.titulo}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Autor</f:facet>
+                    #{libro.autor}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Año</f:facet>
+                    #{libro.anioPublicacion}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Disponibilidad</f:facet>
+                    <span class="#{libro.disponible ? 'disponible' : 'no-disponible'}">
+                        #{libro.disponible ? 'Disponible' : 'No disponible'}
+                    </span>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Acción</f:facet>
+                    <h:link value="Reservar" outcome="reserva.xhtml">
+                        <f:param name="id" value="#{libro.id}"/>
+                    </h:link>
+                </h:column>
+            </h:dataTable>
+        </h:form>
+    </div>
+</h:body>
+</html>

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+   <title>Consultas</title>
+   <meta charset="UTF-8"/>
+   <style>
+      body {
+         margin: 0;
+         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+         background-color: #e0f2f1;
+      }
+
+      .header {
+         background-color: #80cbc4;
+         padding: 1rem 2rem;
+         display: flex;
+         align-items: center;
+         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+      }
+
+
+      .title {
+         font-size: 1.8rem;
+         font-weight: bold;
+      }
+
+      .container {
+         padding: 2rem;
+         display: flex;
+         justify-content: center;
+      }
+
+      .form-box {
+         background-color: white;
+         border-radius: 12px;
+         padding: 2rem;
+         box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+         max-width: 600px;
+         width: 100%;
+      }
+
+      label {
+         font-weight: bold;
+         display: block;
+         margin-top: 1rem;
+      }
+
+      select, textarea {
+         width: 100%;
+         padding: 0.6rem;
+         border-radius: 8px;
+         border: 1px solid #ccc;
+         margin-top: 0.5rem;
+         font-size: 1rem;
+      }
+
+      .btn-group {
+         margin-top: 2rem;
+         display: flex;
+         justify-content: space-between;
+      }
+
+      .btn {
+         background-color: #26a69a;
+         color: white;
+         border: none;
+         padding: 0.7rem 1.5rem;
+         font-size: 1rem;
+         border-radius: 8px;
+         cursor: pointer;
+         transition: background 0.3s ease;
+      }
+
+      .btn:hover {
+         background-color: #00796b;
+      }
+   </style>
+</h:head>
+
+<h:body>
+   <div class="header">
+      <div class="title">CONSULTAS</div>
+   </div>
+
+   <div class="container">
+      <div class="form-box">
+         <h:form>
+            <label for="tipoConsulta">Tipo de Consulta:</label>
+            <h:selectOneMenu id="tipoConsulta" value="#{consultasBean.tipo}">
+               <f:selectItem itemLabel="Seleccione una opción" itemValue="" />
+               <f:selectItem itemLabel="Prestar Libro" itemValue="prestar" />
+               <f:selectItem itemLabel="Renovar Préstamo" itemValue="renovar" />
+               <f:selectItem itemLabel="Ver Disponibilidad" itemValue="disponibilidad" />
+               <f:selectItem itemLabel="Plazo de Préstamo" itemValue="plazo" />
+               <f:selectItem itemLabel="Otro" itemValue="pregunta" />
+            </h:selectOneMenu>
+
+            <label for="contenido">Contenido:</label>
+            <h:inputTextarea id="contenido" value="#{consultasBean.contenido}" rows="4" cols="50" />
+
+            <div class="btn-group">
+               <h:commandButton value="Enviar" action="#{consultasBean.enviar}" styleClass="btn"/>
+               <h:commandButton value="Volver" action="index.xhtml?faces-redirect=true" styleClass="btn"/>
+            </div>
+
+            <h:messages globalOnly="true" />
+         </h:form>
+      </div>
+   </div>
+</h:body>
+</html>
