@@ -4,12 +4,12 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee
                              https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
+
     <context-param>
         <param-name>javax.faces.CONFIG_FILES</param-name>
-        <param-value>/WEB-INF/login.xml,/registro.xml,/css/estilos.xml,/usuario.xml,/WEB-INF/busqueda.xhtml.xml,/WEB-INF/index.xml,/persistence.xml,/WEB-INF/libros.xhtml.xml,/WEB-INF/libro.xml,/WEB-INF/reserva.xhtml.xml,/busqueda.xhtml.xml,/WEB-INF/index.xhtml.xml,/reserva.xml</param-value>
+        <param-value>/catalogo.xml,/consultas.xml</param-value>
     </context-param>
 
-    <!-- JSF Faces Servlet Configuration -->
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>
         <servlet-class>jakarta.faces.webapp.FacesServlet</servlet-class>
@@ -21,7 +21,6 @@
         <url-pattern>*.xhtml</url-pattern>
     </servlet-mapping>
 
-    <!-- Página de bienvenida -->
     <welcome-file-list>
         <welcome-file>biblioteca.xhtml</welcome-file>
     </welcome-file-list>

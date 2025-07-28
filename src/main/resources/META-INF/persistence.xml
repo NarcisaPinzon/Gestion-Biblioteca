@@ -8,6 +8,8 @@
         <jta-data-source>jdbc/bibliotecaDS</jta-data-source>
 
         <class>edu.unl.cc.biblioteca.entidad.Libro</class>
+        <class>edu.unl.cc.biblioteca.entidad.Usuario</class>
+        <class>edu.unl.cc.biblioteca.entidad.Reserva</class>
 
         <properties>
             <!-- Configuración de Hibernate como proveedor JPA -->
@@ -18,3 +20,5 @@
         </properties>
     </persistence-unit>
 </persistence>
+
+

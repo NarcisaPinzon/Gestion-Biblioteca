@@ -12,23 +12,20 @@
     <div class="contenedor-principal">
         <h1 class="titulo">PERFIL</h1>
 
-        <div class="contenedor-perfiles">
-            <!-- Docente -->
+        <h:form>
             <div class="card">
                 <img src="images/docente.png" alt="Docente" class="img-perfil" />
-                <h:form>
-                    <h:commandButton value="Docente" styleClass="boton" action="registro.xhtml?faces-redirect=true" />
-                </h:form>
+                <h:commandButton value="Docente" styleClass="boton"
+                                 action="#{perfilBean.seleccionarPerfil('docente')}" />
             </div>
 
             <div class="card">
                 <img src="images/estudiante.png" alt="Estudiante" class="img-perfil" />
-                <h:form>
-                    <h:commandButton value="Estudiante" styleClass="boton" action="registro.xhtml?faces-redirect=true" />
-                </h:form>
+                <h:commandButton value="Estudiante" styleClass="boton"
+                                 action="#{perfilBean.seleccionarPerfil('estudiante')}" />
             </div>
+        </h:form>
 
-        </div>
     </div>
 
     <!-- Línea inferior -->

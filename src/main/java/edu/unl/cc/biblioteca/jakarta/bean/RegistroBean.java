@@ -1,5 +1,10 @@
 package edu.unl.cc.biblioteca.jakarta.bean;
+import edu.unl.cc.biblioteca.jakarta.bean.PerfilBean;
+import edu.unl.cc.biblioteca.entidad.Usuario;
+import edu.unl.cc.biblioteca.jakarta.domain.UsuarioService;
+import jakarta.ejb.EJB;
 import jakarta.enterprise.context.SessionScoped;
+import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import java.io.Serializable;
 
@@ -14,70 +19,59 @@ public class RegistroBean implements Serializable {
     private String correo;
     private String usuario;
     private String contrasena;
+    private boolean registroExitoso = false;
 
-    private boolean registroExitoso = false; // NUEVO
+    // INYECCIÓN DEL SERVICIO
+    @EJB
+    private UsuarioService usuarioService;
 
-    // Getters y Setters
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getApellido() {
-        return apellido;
-    }
-
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
-    }
-
-    public String getCorreo() {
-        return correo;
-    }
-
-    public void setCorreo(String correo) {
-        this.correo = correo;
-    }
-
-    public String getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
-    }
-
-    public String getContrasena() {
-        return contrasena;
-    }
-
-    public void setContrasena(String contrasena) {
-        this.contrasena = contrasena;
-    }
-
-    public boolean isRegistroExitoso() {
-        return registroExitoso;
-    }
-
-    public void setRegistroExitoso(boolean registroExitoso) {
-        this.registroExitoso = registroExitoso;
-    }
+    // INYECCIÓN DEL PERFIL SELECCIONADO
+    @Inject
+    private PerfilBean perfilBean;
 
     // Acción al presionar "Crear Cuenta"
     public String registrar() {
-        System.out.println("=== REGISTRO DE USUARIO ===");
-        System.out.println("Nombre: " + nombre);
-        System.out.println("Apellido: " + apellido);
-        System.out.println("Correo: " + correo);
-        System.out.println("Usuario: " + usuario);
-        System.out.println("Contraseña: " + contrasena);
+        try {
+            Usuario nuevoUsuario = new Usuario();
+            nuevoUsuario.setNombre(nombre);
+            nuevoUsuario.setApellido(apellido);
+            nuevoUsuario.setCorreo(correo);
+            nuevoUsuario.setUsuario(usuario);
+            nuevoUsuario.setContrasena(contrasena);
+            nuevoUsuario.setPerfil(perfilBean.getPerfilSeleccionado());
 
-        registroExitoso = true; // Mostrar mensaje y botón
+            usuarioService.registrarUsuario(nuevoUsuario);
+            registroExitoso = true;
 
-        return null; // NO redirige automáticamente
+        } catch (Exception e) {
+            e.printStackTrace();
+            registroExitoso = false;
+        }
+
+        return null; // permanece en la misma vista
     }
+
+    public String irAlLogin() {
+        return "login.xhtml?faces-redirect=true";
+    }
+
+    // Getters y Setters
+
+    public String getNombre() { return nombre; }
+    public void setNombre(String nombre) { this.nombre = nombre; }
+
+    public String getApellido() { return apellido; }
+    public void setApellido(String apellido) { this.apellido = apellido; }
+
+    public String getCorreo() { return correo; }
+    public void setCorreo(String correo) { this.correo = correo; }
+
+    public String getUsuario() { return usuario; }
+    public void setUsuario(String usuario) { this.usuario = usuario; }
+
+    public String getContrasena() { return contrasena; }
+    public void setContrasena(String contrasena) { this.contrasena = contrasena; }
+
+    public boolean isRegistroExitoso() { return registroExitoso; }
+    public void setRegistroExitoso(boolean registroExitoso) { this.registroExitoso = registroExitoso; }
 }

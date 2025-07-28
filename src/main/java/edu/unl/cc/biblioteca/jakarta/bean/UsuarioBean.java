@@ -1,83 +1,83 @@
 package edu.unl.cc.biblioteca.jakarta.bean;
-import jakarta.annotation.PostConstruct;
-import jakarta.faces.view.ViewScoped;
+
+import edu.unl.cc.biblioteca.entidad.Usuario;
+import edu.unl.cc.biblioteca.jakarta.domain.UsuarioService;
+import jakarta.ejb.EJB;
+import jakarta.enterprise.context.SessionScoped;
+import jakarta.faces.application.FacesMessage;
+import jakarta.faces.context.FacesContext;
 import jakarta.inject.Named;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 @Named("usuarioBean")
-@ViewScoped
+@SessionScoped
 public class UsuarioBean implements Serializable {
 
-    private String rol; // "docente", "estudiante", "invitado"
-    private String terminoBusqueda;
-    private List<String> resultadosBusqueda;
+    private static final long serialVersionUID = 1L;
 
-    @PostConstruct
-    public void init() {
-        rol = "invitado"; // Se puede cambiar al iniciar sesión
-        resultadosBusqueda = new ArrayList<>();
+    private String username;
+    private String password;
+    private Usuario usuario;
+    private boolean autenticado = false;
+
+    @EJB
+    private UsuarioService usuarioService;
+
+    public String login() {
+        Usuario u = usuarioService.buscarPorUsuario(username);
+        if (u != null && u.getContrasena().equals(password)) {
+            this.usuario = u;
+            this.autenticado = true;
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuarioActual", u);
+            System.out.println("✅ Login exitoso: " + u.getNombre());
+            return "busqueda.xhtml?faces-redirect=true";
+        } else {
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuario o contraseña incorrecta", null));
+            return null;
+        }
     }
 
-    public void buscarLibros() {
-        resultadosBusqueda.clear();
-        resultadosBusqueda.add("Libro relacionado con: " + terminoBusqueda);
-        resultadosBusqueda.add("Otro libro sobre: " + terminoBusqueda);
+    public String logout() {
+        System.out.println("🔓 Cerrando sesión de: " + (usuario != null ? usuario.getNombre() : "desconocido"));
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        return "/login.xhtml?faces-redirect=true";
     }
 
-    public boolean puedeReservar() {
-        return rol.equals("docente") || rol.equals("estudiante");
+    public String irABusqueda() {
+        if (autenticado) {
+            return "busqueda.xhtml?faces-redirect=true";
+        } else {
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_WARN, "Debe iniciar sesión para acceder a la búsqueda.", null));
+            return null;
+        }
     }
 
-    public boolean puedeAccederDigitalCompleto() {
-        return rol.equals("docente") || rol.equals("estudiante");
+// Getters y setters
+
+    public boolean isAutenticado() {
+        return autenticado;
     }
 
-    public boolean puedeComentar() {
-        return rol.equals("docente") || rol.equals("estudiante");
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public boolean puedeSugerir() {
-        return rol.equals("docente");
+    public String getUsername() {
+        return username;
     }
 
-    public boolean puedeVerHistorial() {
-        return !rol.equals("invitado");
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public boolean puedeDevolver() {
-        return !rol.equals("invitado");
+    public String getPassword() {
+        return password;
     }
 
-    public boolean puedeCrearListaLectura() {
-        return rol.equals("docente");
-    }
-
-    public boolean puedeAccederMaterialExclusivo() {
-        return rol.equals("docente");
-    }
-
-    // Getters y Setters
-    public String getRol() {
-        return rol;
-    }
-
-    public void setRol(String rol) {
-        this.rol = rol;
-    }
-
-    public String getTerminoBusqueda() {
-        return terminoBusqueda;
-    }
-
-    public void setTerminoBusqueda(String terminoBusqueda) {
-        this.terminoBusqueda = terminoBusqueda;
-    }
-
-    public List<String> getResultadosBusqueda() {
-        return resultadosBusqueda;
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
-

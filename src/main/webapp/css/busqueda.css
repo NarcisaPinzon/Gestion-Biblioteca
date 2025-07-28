@@ -1,0 +1,77 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #87cfc0;
+}
+.contenedor {
+    background-color: #dcedd8;
+    padding: 3rem 2rem;
+    text-align: center;
+}
+.titulo {
+    font-weight: bold;
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    color: #000;
+    text-transform: uppercase;
+    text-align: left;
+    margin-left: 1rem;
+}
+.campo-busqueda {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+.campo-busqueda label {
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+.campo-busqueda input {
+    width: 250px;
+    padding: 0.7rem;
+    border-radius: 20px;
+    border: none;
+    background-color: white;
+    font-size: 1rem;
+}
+.btn-buscar {
+    background-color: #efefef;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    color: black;
+}
+.btn-buscar:hover {
+    background-color: #e0e0e0;
+}
+.tabla-resultados {
+    margin: 2rem auto;
+    width: 90%;
+    border-collapse: collapse;
+    background-color: #ffffff;
+}
+.tabla-resultados th,
+.tabla-resultados td {
+    padding: 1rem;
+    border: 1px solid #ccc;
+    text-align: left;
+}
+.tabla-resultados th {
+    background-color: #b2dfdb;
+}
+.cabecera-sesion {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #b2dfdb;
+    padding: 1rem 2rem;
+    font-size: 1rem;
+}
+

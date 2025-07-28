@@ -1,131 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core">
-<h:head>
-    <title>Búsqueda de Libros</title>
-    <meta charset="UTF-8"/>
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: #87cfc0;
-        }
+<html
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:f="http://xmlns.jcp.org/jsf/core">
+<f:view>
+    <h:head>
+        <meta charset="UTF-8"/>
+        <title>Búsqueda de Libros</title>
+        <link rel="stylesheet" type="text/css" href="css/busqueda.css"/>
+    </h:head>
+    <h:body>
+        <h:form>
 
-        .contenedor {
-            background-color: #dcedd8;
-            padding: 3rem 2rem;
-            text-align: center;
-        }
+            <div class="titulo">BÚSQUEDA DE LIBROS</div>
 
-        .titulo {
-            font-weight: bold;
-            font-size: 1.5rem;
-            margin-bottom: 2rem;
-            color: #000;
-            text-transform: uppercase;
-            text-align: left;
-            margin-left: 1rem;
-        }
+            <!-- Campo de búsqueda -->
+            <div class="contenedor">
+                <div class="campo-busqueda">
+                    <label for="buscar">Buscar</label>
+                    <h:inputText id="buscar" value="#{busquedaBean.termino}" />
+                </div>
 
-        .campo-busqueda {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-        }
-
-        .campo-busqueda label {
-            font-weight: bold;
-            font-size: 1.2rem;
-        }
-
-        .campo-busqueda input {
-            width: 250px;
-            padding: 0.7rem;
-            border-radius: 20px;
-            border: none;
-            background-color: white;
-            font-size: 1rem;
-        }
-
-        .btn-buscar {
-            background-color: #efefef;
-            border: none;
-            padding: 1rem 2rem;
-            border-radius: 20px;
-            font-weight: bold;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            color: black;
-        }
-
-        .btn-buscar:hover {
-            background-color: #e0e0e0;
-        }
-
-        .tabla-resultados {
-            margin: 2rem auto;
-            width: 90%;
-            border-collapse: collapse;
-            background-color: #ffffff;
-        }
-
-        .tabla-resultados th, .tabla-resultados td {
-            padding: 1rem;
-            border: 1px solid #ccc;
-            text-align: left;
-        }
-
-        .tabla-resultados th {
-            background-color: #b2dfdb;
-        }
-    </style>
-</h:head>
-
-<h:body>
-    <h:form>
-        <div class="titulo">BÚSQUEDA DE LIBROS</div>
-
-        <div class="contenedor">
-            <div class="campo-busqueda">
-                <label for="buscar">Buscar</label>
-                <h:inputText id="buscar" value="#{busquedaBean.termino}" />
+                <h:commandButton value="REALIZA TU BÚSQUEDA"
+                                 action="#{busquedaBean.buscar}"
+                                 styleClass="btn-buscar" />
             </div>
 
-            <h:commandButton value="REALIZA TU BÚSQUEDA"
-                             action="#{busquedaBean.buscar}"
-                             styleClass="btn-buscar" />
-        </div>
+            <h:messages globalOnly="true" style="color:red; margin-top:10px;" />
 
-        <h:panelGroup rendered="#{busquedaBean.mostrarResultados}">
-            <h:dataTable value="#{busquedaBean.resultados}" var="libro" styleClass="tabla-resultados">
-                <h:column>
-                    <f:facet name="header">Título</f:facet>
-                    #{libro.titulo}
-                </h:column>
-                <h:column>
-                    <f:facet name="header">Autor</f:facet>
-                    #{libro.autor}
-                </h:column>
-                <h:column>
-                    <f:facet name="header">Año</f:facet>
-                    #{libro.anioPublicacion}
-                </h:column>
-                <h:column>
-                    <f:facet name="header">Editorial</f:facet>
-                    #{libro.editorial}
-                </h:column>
-                <h:column>
-                    <f:facet name="header">Disponible</f:facet>
-                    <h:outputText value="#{libro.disponible ? 'Sí' : 'No'}" />
-                </h:column>
-            </h:dataTable>
-        </h:panelGroup>
-    </h:form>
-</h:body>
+            <!-- Resultados -->
+            <h:panelGroup rendered="#{busquedaBean.mostrarResultados}">
+                <h:dataTable value="#{busquedaBean.resultados}" var="libro" styleClass="tabla-resultados">
+                    <h:column>
+                        <f:facet name="header">Seleccionar</f:facet>
+                        <h:selectBooleanCheckbox value="#{busquedaBean.librosSeleccionados[libro.id]}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Título</f:facet>
+                        #{libro.titulo}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Autor</f:facet>
+                        #{libro.autor}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Año</f:facet>
+                        #{libro.anioPublicacion}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Editorial</f:facet>
+                        #{libro.editorial}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Disponible</f:facet>
+                        <h:outputText value="#{libro.disponible ? 'Sí' : 'No'}" />
+                    </h:column>
+                </h:dataTable>
+
+                <h:commandButton value="Reservar"
+                                 action="#{busquedaBean.irAReserva}"
+                                 styleClass="btn-buscar"
+                                 style="margin-top: 10px;" />
+            </h:panelGroup>
+        </h:form>
+    </h:body>
+</f:view>
 </html>

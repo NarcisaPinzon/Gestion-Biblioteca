@@ -10,29 +10,34 @@
 
 <h:body>
     <div class="container">
-
-        <!-- Barra lateral azul -->
         <div class="barra-lateral"></div>
 
-        <!-- Formulario de registro -->
         <div class="login-section">
             <h:graphicImage url="images/UNL.png" styleClass="logo-unl" />
             <h2 class="titulo">REGISTRARSE</h2>
 
             <h:form styleClass="formulario">
-                <!-- Sección del formulario -->
                 <h:panelGroup rendered="#{!registroBean.registroExitoso}">
-                    <div class="campo-grupo">
-                        <div class="campo">
-                            <label>Nombre</label>
-                            <h:inputText value="#{registroBean.nombre}" styleClass="entrada" />
-                        </div>
-                        <div class="campo">
-                            <label>Apellido</label>
-                            <h:inputText value="#{registroBean.apellido}" styleClass="entrada" />
-                        </div>
+
+                    <!-- Nombre -->
+                    <div class="campo">
+                        <label>Nombre</label>
+                        <h:inputText id="nombre" value="#{registroBean.nombre}" styleClass="entrada" required="true">
+                            <f:validateRegex pattern="^[A-Za-záéíóúÁÉÍÓÚñÑ]{1,15}$"/>
+                        </h:inputText>
+                        <h:message for="nombre" style="color:red"/>
                     </div>
 
+                    <!-- Apellido -->
+                    <div class="campo">
+                        <label>Apellido</label>
+                        <h:inputText id="apellido" value="#{registroBean.apellido}" styleClass="entrada" required="true">
+                            <f:validateRegex pattern="^[A-Za-záéíóúÁÉÍÓÚñÑ]{1,15}$"/>
+                        </h:inputText>
+                        <h:message for="apellido" style="color:red"/>
+                    </div>
+
+                    <!-- Correo -->
                     <div class="campo">
                         <label>Correo Electrónico</label>
                         <h:inputText id="correo" value="#{registroBean.correo}" styleClass="entrada" required="true">
@@ -41,36 +46,43 @@
                         <h:message for="correo" style="color:red"/>
                     </div>
 
+                    <!-- Usuario -->
                     <div class="campo">
                         <label>Usuario</label>
-                        <h:inputText value="#{registroBean.usuario}" styleClass="entrada" />
+                        <h:inputText id="usuario" value="#{registroBean.usuario}" styleClass="entrada" required="true">
+                            <f:validateRegex pattern="^[a-zA-Z0-9]{1,15}$"/>
+                        </h:inputText>
+                        <h:message for="usuario" style="color:red"/>
                     </div>
 
+                    <!-- Contraseña -->
                     <div class="campo">
                         <label>Contraseña</label>
                         <h:inputSecret id="contrasena" value="#{registroBean.contrasena}" styleClass="entrada" required="true">
-                            <f:validateLength minimum="12" maximum="12"/>
+                            <f:validateLength minimum="7" maximum="15"/>
                         </h:inputSecret>
                         <h:message for="contrasena" style="color:red"/>
                     </div>
 
+                    <!-- Botón de crear cuenta -->
                     <div class="boton-centrado">
                         <h:commandButton value="Crear Cuenta" action="#{registroBean.registrar}" styleClass="boton-verde" />
                     </div>
                 </h:panelGroup>
 
-                <!-- Mensaje de éxito y botón de iniciar sesión -->
+                <!-- Mensaje de éxito y botón -->
                 <h:panelGroup rendered="#{registroBean.registroExitoso}">
                     <div class="mensaje-exito">
                         Su usuario ha sido creado exitosamente 😊
                     </div>
 
                     <div class="boton-centrado">
-                        <h:commandButton value="Iniciar sesión" action="login.xhtml?faces-redirect=true" styleClass="boton-verde" />
+                        <h:commandButton value="Iniciar sesión" action="#{registroBean.irAlLogin}" styleClass="boton-verde" />
                     </div>
                 </h:panelGroup>
             </h:form>
         </div>
+
     </div>
 </h:body>
 </html>

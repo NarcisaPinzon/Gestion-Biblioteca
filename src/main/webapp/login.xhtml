@@ -1,31 +1,44 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="jakarta.faces.html"
-      xmlns:f="jakarta.faces.core">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
 <h:head>
+    <meta charset="UTF-8" />
     <title>Login</title>
     <link rel="stylesheet" type="text/css" href="css/estilos.css" />
 </h:head>
+
 <h:body>
     <div class="login-container">
         <h:graphicImage url="images/logo-biblioteca.jpg" alt="Logo Biblioteca" />
 
         <h2>SISTEMA BIBLIOTECARIO</h2>
-        <p>Por favor regístrese o inicie sesión para poder acceder</p>
 
         <h:form>
-            <label for="user">Usuario:</label>
-            <h:inputText id="user" value="#{authBean.username}" required="true" />
 
-            <label for="pass">Contraseña:</label>
-            <h:inputSecret id="pass" value="#{authBean.password}" required="true" />
+            <!-- Opciones de navegación (solo si está autenticado) -->
+            <h:panelGroup rendered="#{usuarioBean.autenticado}" style="margin-bottom: 20px;">
+                <h:commandButton value="Ir a búsqueda" action="#{usuarioBean.irABusqueda}" />
+                <h:commandButton value="Cerrar sesión" action="#{usuarioBean.logout}" style="margin-left: 10px;" />
+            </h:panelGroup>
 
-            <div class="buttons">
-                <h:commandButton value="Iniciar sesión" action="#{authBean.login}" />
-                <h:button value="Registrarse" outcome="registro.xhtml" />
-            </div>
+            <!-- Formulario de login (solo si no está autenticado) -->
+            <h:panelGroup rendered="#{!usuarioBean.autenticado}">
+                <h:panelGrid columns="2" cellpadding="5">
+                    <h:outputLabel for="user" value="Usuario:" />
+                    <h:inputText id="user" value="#{usuarioBean.username}" required="true" />
 
-            <!-- Mensajes de error debajo de los botones -->
+                    <h:outputLabel for="pass" value="Contraseña:" />
+                    <h:inputSecret id="pass" value="#{usuarioBean.password}" required="true" />
+                </h:panelGrid>
+
+                <div class="buttons" style="margin-top: 15px;">
+                    <h:commandButton value="Iniciar sesión" action="#{usuarioBean.login}" />
+                    <h:button value="Registrarse" outcome="perfil.xhtml" style="margin-left: 10px;" />
+                </div>
+            </h:panelGroup>
+
             <h:messages globalOnly="true" layout="table" style="color:red; margin-top:10px;" />
         </h:form>
     </div>
